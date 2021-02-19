@@ -1,11 +1,11 @@
 //
-//  CoreImageKitUITests.swift
-//  Created on 2021/1/15
-//  Description <#文件描述#>  
+//  CoreGraphicsKitUITests.swift
+//  Created on 2021/2/19
+//  Description <#文件描述#>
 
 import XCTest
 
-class CoreImageKitUITests: XCTestCase {
+class CoreGraphicsKitUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

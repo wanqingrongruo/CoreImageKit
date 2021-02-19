@@ -9,28 +9,11 @@ enum Section: Hashable {
     case main
 }
 
-enum FilterCategory {
-    case none, motionBLur, boxBlur
-    
-    var filterName: String {
-        switch self {
-        case .motionBLur:
-            return "CIMotionBlur"
-        case .boxBlur:
-            return "CIBoxBlur"
-        default:
-            return ""
-        }
-    }
-}
-
-class CICase: Hashable {
+class CGCase: Hashable {
     let title: String
-    let filterCategoty: FilterCategory
     let destinationViewController: UIViewController.Type?
-    init(title: String, filterCategoty: FilterCategory, viewController: UIViewController.Type? = nil) {
+    init(title: String, viewController: UIViewController.Type? = nil) {
         self.title = title
-        self.filterCategoty = filterCategoty
         self.destinationViewController = viewController
     }
     
@@ -38,7 +21,7 @@ class CICase: Hashable {
         hasher.combine(identifer)
     }
     
-    static func == (lhs: CICase, rhs: CICase) -> Bool {
+    static func == (lhs: CGCase, rhs: CGCase) -> Bool {
         return lhs.identifer == rhs.identifer
     }
     
@@ -47,15 +30,15 @@ class CICase: Hashable {
 
 class ViewController: UIViewController {
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, CICase>! = nil
+    var dataSource: UICollectionViewDiffableDataSource<Section, CGCase>! = nil
     var collectionView: UICollectionView! = nil
     
-    var items: [CICase] = []
+    var items: [CGCase] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = "Core Image"
+        navigationItem.title = "Core Graphics"
         configureHierarchy()
         configureItems()
         configureDataSource()
@@ -77,23 +60,22 @@ extension ViewController {
     
     @objc func configureItems() {
         items = [
-            CICase(title: "自带滤镜", filterCategoty: .none, viewController: FiltersViewController.self),
-            CICase(title: "自定义滤镜", filterCategoty: .none, viewController: CustomFiltersViewController.self)
+            CGCase(title: "基础", viewController: BaseUseViewController.self)
         ]
     }
     
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, CICase> { (cell, IndexPath, item) in
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, CGCase> { (cell, IndexPath, item) in
             var content = cell.defaultContentConfiguration()
             content.text = item.title
             cell.contentConfiguration = content
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, CICase>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, CGCase>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
         
-        var snapshot = NSDiffableDataSourceSnapshot<Section, CICase>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, CGCase>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
         dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
@@ -112,3 +94,4 @@ extension ViewController: UICollectionViewDelegate {
         }
     }
 }
+

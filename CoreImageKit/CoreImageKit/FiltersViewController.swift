@@ -1,10 +1,7 @@
 //
 //  FiltersViewController.swift
 //  Created on 2021/1/20
-//  Description <#文件描述#>
-
-//  Copyright © 2021 Huami inc. All rights reserved.
-//  @author zhengwenxiang(zhengwenxiang@huami.com)  
+//  Description <#文件描述#> 
 
 import UIKit
 
